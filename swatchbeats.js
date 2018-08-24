@@ -15,15 +15,15 @@ const timeToSwatchBeat = (time) => {
   time = time.replace(/ ?(am|AM|pm|PM)?/g, "");
   time = time.replace(".", ":");
   // Assuming time is in format 12:00 or 12:00:00
-  const h = time.slice(0, 2);
-  const m = time.slice(3, 5);
+  const h = Number(time.slice(0, 2));
+  const m = Number(time.slice(3, 5));
   var s = 0;
   if (time.length === 8) {
-    s = time.slice(6, 8);
+    s = Number(time.slice(6, 8));
   }
   const timeZoneOffset = new Date().getTimezoneOffset();
-  const swatch = '000' + (Math.floor((h * 3600 + (m + timeZoneOffset) * 60 + s) / 86.4) % 1000).slice(-3);
-  return swatch;
-}
+  const swatch = ('000' + (Math.floor((h * 3600 + (m + timeZoneOffset) * 60 + s) / 86.4) % 1000)).slice(-3);
+  return '@' + swatch + ' .beat';
+};
 
-window.setInterval(replaceOnDocument, 1);
+window.setInterval(replaceOnDocument, 100);
